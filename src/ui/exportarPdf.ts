@@ -11,7 +11,8 @@ const CIANO: [number, number, number] = [0, 162, 215];
 /** Carrega o logo como data URL; se falhar, o PDF sai sem logo em vez de quebrar. */
 async function carregarLogo(): Promise<string | null> {
   try {
-    const resposta = await fetch('/logo.png');
+    // BASE_URL respeita o "base" do vite.config (o site pode estar numa subpasta no GitHub Pages).
+    const resposta = await fetch(`${import.meta.env.BASE_URL}logo.png`);
     if (!resposta.ok) return null;
     const blob = await resposta.blob();
     return await new Promise<string | null>((resolve) => {
