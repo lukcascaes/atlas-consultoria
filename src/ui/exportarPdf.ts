@@ -84,8 +84,13 @@ export function exportarPdf(cenarios: Cenario[], feedback: Feedback): void {
     doc.setFont('helvetica', 'bold');
     doc.setFontSize(12);
     doc.text('Fluxo de caixa acumulado (24 meses)', margem, yImagem);
-    doc.addImage(imagem, 'PNG', margem, yImagem + 4, largura, alturaImagem);
+    doc.addImage(imagem, 'PNG', margem, yImagem + 4, largura, alturaImagem, undefined, 'FAST');
   }
 
-  doc.save(`simulacao-atlas-${new Date().toISOString().slice(0, 10)}.pdf`);
+  // Data local (toISOString usaria UTC e poderia mostrar o dia seguinte à noite).
+  const hoje = new Date();
+  const data = [hoje.getFullYear(), hoje.getMonth() + 1, hoje.getDate()]
+    .map((n) => String(n).padStart(2, '0'))
+    .join('-');
+  doc.save(`simulacao-atlas-${data}.pdf`);
 }
