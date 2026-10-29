@@ -1,1 +1,125 @@
-/* Estilos definidos no commit da interface */
+:root {
+  --petroleo: #0f4c5c;
+  --petroleo-escuro: #0a3742;
+  --petroleo-claro: #e6eff1;
+  --texto: #1d2b2f;
+  --texto-suave: #5b6b70;
+  --borda: #d6e0e2;
+  --fundo: #f5f8f9;
+  --branco: #ffffff;
+  --verde: #2a9d8f;
+  --vermelho: #c8553d;
+  --amarelo: #c99a2e;
+  --raio: 10px;
+  font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, Roboto, sans-serif;
+  color: var(--texto);
+  background: var(--fundo);
+}
+
+* { box-sizing: border-box; }
+
+body { margin: 0; line-height: 1.5; }
+
+h1, h2 { margin: 0; line-height: 1.25; }
+h2 { font-size: 1.1rem; color: var(--petroleo); margin-bottom: 1rem; }
+
+/* Cabeçalho */
+.cabecalho { background: var(--petroleo); color: var(--branco); padding: 1rem; }
+.cabecalho__conteudo { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; gap: 1rem; }
+.cabecalho h1 { font-size: 1.35rem; }
+.cabecalho__sub { margin: 0; opacity: 0.8; font-size: 0.9rem; }
+/* Caixa de tamanho fixo: se a logo ainda não existir, o texto alternativo aparece dentro dela */
+.cabecalho__logo {
+  width: 56px; height: 56px; flex-shrink: 0; object-fit: contain;
+  background: var(--branco); border-radius: 8px; color: var(--petroleo);
+  font-size: 0.6rem; overflow: hidden; display: flex; align-items: center; text-align: center;
+}
+
+/* Layout */
+.container { max-width: 1100px; margin: 0 auto; padding: 1.25rem 1rem 2rem; display: grid; gap: 1.25rem; }
+.resultados { display: grid; gap: 1.25rem; }
+.resultados[hidden] { display: none; }
+.card { background: var(--branco); border: 1px solid var(--borda); border-radius: var(--raio); padding: 1.25rem; min-width: 0; }
+.card__topo { display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+.card__topo h2 { margin: 0; }
+
+/* Formulário */
+.campos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+.campo { display: flex; flex-direction: column; gap: 0.35rem; font-size: 0.9rem; font-weight: 600; }
+.campo input {
+  font: inherit; font-weight: 400; padding: 0.65rem 0.75rem;
+  border: 1px solid var(--borda); border-radius: 8px; background: var(--branco);
+}
+.campo input:focus { outline: 2px solid var(--petroleo); outline-offset: 1px; border-color: var(--petroleo); }
+.campo input[aria-invalid='true'] { border-color: var(--vermelho); }
+.erro { color: var(--vermelho); font-weight: 400; min-height: 1.2em; font-size: 0.8rem; }
+.acoes { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 0.5rem; }
+
+/* Botões */
+.botao {
+  font: inherit; font-weight: 600; cursor: pointer; border-radius: 8px; padding: 0.65rem 1.25rem;
+  background: var(--petroleo); color: var(--branco); border: 1px solid var(--petroleo);
+}
+.botao:hover:not(:disabled) { background: var(--petroleo-escuro); }
+.botao:disabled { opacity: 0.45; cursor: not-allowed; }
+.botao--secundario { background: var(--branco); color: var(--petroleo); }
+.botao--secundario:hover:not(:disabled) { background: var(--petroleo-claro); }
+.botao--perigo { background: var(--branco); color: var(--vermelho); border-color: var(--vermelho); padding: 0.4rem 0.9rem; font-size: 0.85rem; }
+.botao--perigo:hover { background: #fbeeea; }
+.botao--pequeno { padding: 0.35rem 0.8rem; font-size: 0.85rem; }
+
+/* Feedback */
+.selo { border-left: 5px solid; border-radius: 8px; padding: 0.85rem 1rem; }
+.selo strong { font-size: 1.1rem; }
+.selo p { margin: 0.25rem 0 0; }
+.selo--alta { border-color: var(--verde); background: #e8f5f3; }
+.selo--moderada { border-color: var(--amarelo); background: #fbf5e6; }
+.selo--baixa { border-color: #d98a3d; background: #fcf0e4; }
+.selo--prejuizo { border-color: var(--vermelho); background: #fbeeea; }
+.aviso { margin: 0.75rem 0 0; font-size: 0.78rem; color: var(--texto-suave); }
+
+/* Tabela */
+.tabela-wrapper { overflow-x: auto; }
+.tabela { width: 100%; border-collapse: collapse; font-size: 0.9rem; white-space: nowrap; }
+.tabela th, .tabela td { padding: 0.6rem 0.75rem; text-align: right; border-bottom: 1px solid var(--borda); }
+.tabela th:first-child { text-align: left; }
+.tabela thead th { background: var(--petroleo); color: var(--branco); font-weight: 600; }
+.tabela tbody th { font-weight: 600; }
+.linha--realista { background: var(--petroleo-claro); }
+.negativo { color: var(--vermelho); font-weight: 600; }
+.grafico-wrapper { position: relative; height: 320px; margin-top: 1.25rem; }
+
+/* Sensibilidade */
+.sliders { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.25rem; }
+.slider { display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.9rem; }
+.slider input { width: 100%; accent-color: var(--petroleo); }
+.metricas { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+.metrica { background: var(--fundo); border-radius: 8px; padding: 0.85rem 1rem; display: flex; flex-direction: column; gap: 0.15rem; }
+.metrica__rotulo { font-size: 0.8rem; color: var(--texto-suave); }
+.metrica__valor { font-size: 1.2rem; font-weight: 700; }
+.metrica__dif { font-size: 0.8rem; }
+.metrica__dif--melhor { color: var(--verde); }
+.metrica__dif--pior { color: var(--vermelho); }
+.metrica__dif--neutro { color: var(--texto-suave); }
+
+/* Histórico */
+.historico { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.5rem; }
+.historico__item {
+  display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+  padding: 0.65rem 0.85rem; border: 1px solid var(--borda); border-radius: 8px; font-size: 0.85rem;
+}
+.historico__item > div { display: flex; flex-direction: column; min-width: 0; }
+.historico__data { font-weight: 600; color: var(--petroleo); }
+.historico__vazio { color: var(--texto-suave); font-size: 0.9rem; }
+
+.rodape { text-align: center; font-size: 0.8rem; color: var(--texto-suave); padding: 1rem; }
+
+/* Celular */
+@media (max-width: 720px) {
+  .campos, .sliders, .metricas { grid-template-columns: 1fr; }
+  .cabecalho h1 { font-size: 1.1rem; }
+  .cabecalho__logo { width: 44px; height: 44px; }
+  .grafico-wrapper { height: 260px; }
+  .historico__item { flex-direction: column; align-items: stretch; }
+  .acoes .botao { flex: 1; }
+}
