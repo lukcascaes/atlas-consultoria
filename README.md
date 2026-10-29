@@ -42,7 +42,8 @@ src/
 │   └── historico.ts     # Leitura e escrita do localStorage com try/catch
 ├── ui/              # Interface: só chama o core e desenha na tela
 │   ├── formulario.ts, grafico.ts, tabelaCenarios.ts, sensibilidade.ts,
-│   ├── feedback.ts, historico.ts, exportarPdf.ts
+│   ├── feedback.ts, historico.ts, exportarPdf.ts, metodologia.ts
+│   ├── navegacao.ts     # Telas (Início, Simulador, Sensibilidade, Histórico, Metodologia) via #/rota
 │   ├── formatadores.ts  # Moeda, %, payback (nunca exibe NaN/Infinity)
 │   └── dom.ts           # Utilitários de DOM
 ├── estilos/main.css
