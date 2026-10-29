@@ -1,6 +1,6 @@
 # Simulador de Viabilidade Atlas
 
-MVP acadêmico da **Atlas Financeira 360**: simula a viabilidade de um negócio a partir do investimento inicial, da receita mensal e dos custos mensais. Mostra três cenários, uma análise de sensibilidade, um parecer por motor de regras, o histórico local e a exportação em PDF.
+MVP acadêmico da **Atlas Consultoria**: simula a viabilidade de um negócio a partir do investimento inicial, da receita mensal e dos custos mensais. Mostra três cenários, uma análise de sensibilidade, um parecer por motor de regras, o histórico local e a exportação em PDF.
 
 Roda 100% no navegador, sem backend. O histórico fica no `localStorage`.
 
@@ -47,7 +47,7 @@ src/
 │   └── dom.ts           # Utilitários de DOM
 ├── estilos/main.css
 └── main.ts          # Ponto de entrada: liga os eventos ao core
-public/logo.png      # Logo (adicionar)
+public/logo.png      # Logo da Atlas Consultoria (também usado no PDF e como favicon)
 ```
 
 ## Ajustes rápidos

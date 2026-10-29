@@ -3,38 +3,55 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Simulador de Viabilidade Atlas</title>
+    <meta name="theme-color" content="#0B2236" />
+    <title>Simulador de Viabilidade · Atlas Consultoria</title>
+    <link rel="icon" type="image/png" href="/logo.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <header class="cabecalho">
       <div class="cabecalho__conteudo">
-        <!-- Espaço reservado para a logo; se o arquivo não existir, o texto alternativo aparece -->
-        <img class="cabecalho__logo" src="/logo.png" alt="Logo Atlas Financeira 360" />
-        <div>
-          <h1>Simulador de Viabilidade Atlas</h1>
-          <p class="cabecalho__sub">Atlas Financeira 360</p>
+        <img class="cabecalho__logo" src="/logo.png" alt="Logo Atlas Consultoria" />
+        <div class="cabecalho__marca">
+          <span class="cabecalho__nome">Atlas Consultoria</span>
+          <span class="cabecalho__tag">Financial Consulting</span>
         </div>
       </div>
     </header>
 
+    <section class="hero">
+      <div class="hero__conteudo">
+        <p class="hero__sobretitulo">Simulador de Viabilidade</p>
+        <h1>Descubra se o seu negócio se paga</h1>
+        <p class="hero__texto">
+          Informe investimento, receita e custos para ver payback, ROI, cenários e o parecer consultivo em segundos.
+        </p>
+      </div>
+    </section>
+
     <main class="container">
-      <section class="card" aria-labelledby="titulo-entradas">
+      <section class="card card--destaque" aria-labelledby="titulo-entradas">
         <h2 id="titulo-entradas">Dados do negócio</h2>
         <form id="form-simulacao" novalidate>
           <div class="campos">
             <label class="campo">
               <span>Investimento inicial (R$)</span>
-              <input id="investimento" name="investimento" type="text" inputmode="decimal" placeholder="Ex.: 50000" />
+              <input id="investimento" name="investimento" type="text" inputmode="decimal" placeholder="Ex.: 50.000" />
               <small class="erro" data-erro-para="investimento"></small>
             </label>
             <label class="campo">
               <span>Receita mensal (R$)</span>
-              <input id="receita" name="receita" type="text" inputmode="decimal" placeholder="Ex.: 12000" />
+              <input id="receita" name="receita" type="text" inputmode="decimal" placeholder="Ex.: 12.000" />
               <small class="erro" data-erro-para="receita"></small>
             </label>
             <label class="campo">
               <span>Custos mensais (R$)</span>
-              <input id="custos" name="custos" type="text" inputmode="decimal" placeholder="Ex.: 7000" />
+              <input id="custos" name="custos" type="text" inputmode="decimal" placeholder="Ex.: 7.000" />
               <small class="erro" data-erro-para="custos"></small>
             </label>
           </div>
@@ -57,6 +74,7 @@
           <div class="tabela-wrapper">
             <table id="tabela-cenarios" class="tabela"></table>
           </div>
+          <h3 class="subtitulo">Fluxo de caixa acumulado · 24 meses</h3>
           <div class="grafico-wrapper">
             <canvas id="grafico-fluxo" aria-label="Fluxo de caixa acumulado por cenário" role="img"></canvas>
           </div>
@@ -66,11 +84,11 @@
           <h2 id="titulo-sensibilidade">Análise de sensibilidade</h2>
           <div class="sliders">
             <label class="slider">
-              <span>Variação da receita: <strong id="valor-var-receita">0%</strong></span>
+              <span>Variação da receita <strong id="valor-var-receita">0%</strong></span>
               <input id="var-receita" type="range" min="-50" max="50" step="1" value="0" />
             </label>
             <label class="slider">
-              <span>Variação dos custos: <strong id="valor-var-custos">0%</strong></span>
+              <span>Variação dos custos <strong id="valor-var-custos">0%</strong></span>
               <input id="var-custos" type="range" min="-50" max="50" step="1" value="0" />
             </label>
           </div>
@@ -87,7 +105,10 @@
       </section>
     </main>
 
-    <footer class="rodape">Atlas Financeira 360 · MVP acadêmico</footer>
+    <footer class="rodape">
+      <span class="rodape__nome">Atlas Consultoria</span>
+      <span>Financial Consulting · MVP acadêmico</span>
+    </footer>
 
     <script type="module" src="/src/main.ts"></script>
   </body>
