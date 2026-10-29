@@ -17,6 +17,10 @@ Abra a URL exibida no terminal (padrão: http://localhost:5173).
 
 Build de produção: `npm run build` (gera a pasta `dist/`).
 
+## Publicação (GitHub Pages)
+
+Cada push na branch `main` roda os testes, gera o build e publica o site pelo workflow `.github/workflows/deploy.yml`. Na primeira vez, ative em **Settings → Pages → Source: GitHub Actions**.
+
 ## Como rodar os testes
 
 ```bash
