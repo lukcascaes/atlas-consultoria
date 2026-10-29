@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simulador de Viabilidade Atlas</title>
+    <link rel="stylesheet" href="/src/estilos/main.css" />
+  </head>
+  <body>
+    <header class="cabecalho">
+      <div class="cabecalho__conteudo">
+        <!-- Espaço reservado para a logo; se o arquivo não existir, o texto alternativo aparece -->
+        <img class="cabecalho__logo" src="/logo.png" alt="Logo Atlas Financeira 360" />
+        <div>
+          <h1>Simulador de Viabilidade Atlas</h1>
+          <p class="cabecalho__sub">Atlas Financeira 360</p>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="card" aria-labelledby="titulo-entradas">
+        <h2 id="titulo-entradas">Dados do negócio</h2>
+        <form id="form-simulacao" novalidate>
+          <div class="campos">
+            <label class="campo">
+              <span>Investimento inicial (R$)</span>
+              <input id="investimento" name="investimento" type="text" inputmode="decimal" placeholder="Ex.: 50000" />
+              <small class="erro" data-erro-para="investimento"></small>
+            </label>
+            <label class="campo">
+              <span>Receita mensal (R$)</span>
+              <input id="receita" name="receita" type="text" inputmode="decimal" placeholder="Ex.: 12000" />
+              <small class="erro" data-erro-para="receita"></small>
+            </label>
+            <label class="campo">
+              <span>Custos mensais (R$)</span>
+              <input id="custos" name="custos" type="text" inputmode="decimal" placeholder="Ex.: 7000" />
+              <small class="erro" data-erro-para="custos"></small>
+            </label>
+          </div>
+          <div class="acoes">
+            <button type="submit" class="botao">Simular</button>
+            <button type="button" id="btn-pdf" class="botao botao--secundario" disabled>Exportar PDF</button>
+          </div>
+        </form>
+      </section>
+
+      <section id="resultados" class="resultados" hidden>
+        <section class="card" aria-labelledby="titulo-feedback">
+          <h2 id="titulo-feedback">Feedback consultivo</h2>
+          <div id="feedback"></div>
+          <p class="aviso">Este parecer é gerado por um motor de regras simples (limites fixos), não por inteligência artificial.</p>
+        </section>
+
+        <section class="card" aria-labelledby="titulo-cenarios">
+          <h2 id="titulo-cenarios">Comparação de cenários</h2>
+          <div class="tabela-wrapper">
+            <table id="tabela-cenarios" class="tabela"></table>
+          </div>
+          <div class="grafico-wrapper">
+            <canvas id="grafico-fluxo" aria-label="Fluxo de caixa acumulado por cenário" role="img"></canvas>
+          </div>
+        </section>
+
+        <section class="card" aria-labelledby="titulo-sensibilidade">
+          <h2 id="titulo-sensibilidade">Análise de sensibilidade</h2>
+          <div class="sliders">
+            <label class="slider">
+              <span>Variação da receita: <strong id="valor-var-receita">0%</strong></span>
+              <input id="var-receita" type="range" min="-50" max="50" step="1" value="0" />
+            </label>
+            <label class="slider">
+              <span>Variação dos custos: <strong id="valor-var-custos">0%</strong></span>
+              <input id="var-custos" type="range" min="-50" max="50" step="1" value="0" />
+            </label>
+          </div>
+          <div id="sensibilidade-resultado"></div>
+        </section>
+      </section>
+
+      <section class="card" aria-labelledby="titulo-historico">
+        <div class="card__topo">
+          <h2 id="titulo-historico">Histórico (últimas 10)</h2>
+          <button type="button" id="btn-limpar" class="botao botao--perigo">Limpar</button>
+        </div>
+        <ul id="lista-historico" class="historico"></ul>
+      </section>
+    </main>
+
+    <footer class="rodape">Atlas Financeira 360 · MVP acadêmico</footer>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
