@@ -54,7 +54,7 @@ pegar('btn-pdf').addEventListener('click', async () => {
   try {
     // Import dinâmico: o jsPDF (pesado) só é baixado quando alguém clica em exportar.
     const { exportarPdf } = await import('./ui/exportarPdf');
-    exportarPdf(atual.cenarios, atual.feedback);
+    await exportarPdf(atual.cenarios, atual.feedback);
   } catch (erro) {
     console.error(erro);
     alert('Não foi possível gerar o PDF. Tente novamente.');

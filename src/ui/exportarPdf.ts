@@ -5,28 +5,53 @@ import { formatarMoeda, formatarPayback, formatarPercentual } from './formatador
 import { imagemDoGrafico } from './grafico';
 import { CABECALHO_TABELA, linhasDaTabela } from './tabelaCenarios';
 
-const PETROLEO: [number, number, number] = [15, 76, 92];
+const MARINHO: [number, number, number] = [11, 34, 54];
+const CIANO: [number, number, number] = [0, 162, 215];
 
-export function exportarPdf(cenarios: Cenario[], feedback: Feedback): void {
+/** Carrega o logo como data URL; se falhar, o PDF sai sem logo em vez de quebrar. */
+async function carregarLogo(): Promise<string | null> {
+  try {
+    const resposta = await fetch('/logo.png');
+    if (!resposta.ok) return null;
+    const blob = await resposta.blob();
+    return await new Promise<string | null>((resolve) => {
+      const leitor = new FileReader();
+      leitor.onload = () => resolve(typeof leitor.result === 'string' ? leitor.result : null);
+      leitor.onerror = () => resolve(null);
+      leitor.readAsDataURL(blob);
+    });
+  } catch {
+    return null;
+  }
+}
+
+export async function exportarPdf(cenarios: Cenario[], feedback: Feedback): Promise<void> {
   const realista = cenarios.find((c) => c.nome === 'realista');
   if (!realista) return;
 
   const doc = new jsPDF({ unit: 'mm', format: 'a4' });
   const margem = 15;
-  const largura = doc.internal.pageSize.getWidth() - margem * 2;
+  const larguraPagina = doc.internal.pageSize.getWidth();
+  const largura = larguraPagina - margem * 2;
 
-  // Faixa de cabeçalho
-  doc.setFillColor(...PETROLEO);
-  doc.rect(0, 0, doc.internal.pageSize.getWidth(), 24, 'F');
-  doc.setTextColor(255, 255, 255);
+  // Cabeçalho branco com logo, como no site, e uma faixa marinho/ciano embaixo
+  const logo = await carregarLogo();
+  const xTexto = logo ? margem + 22 : margem;
+  if (logo) doc.addImage(logo, 'PNG', margem, 6, 19, 19);
+  doc.setTextColor(...MARINHO);
   doc.setFont('helvetica', 'bold');
-  doc.setFontSize(16);
-  doc.text('Simulador de Viabilidade Atlas', margem, 12);
+  doc.setFontSize(14);
+  doc.text('ATLAS CONSULTORIA', xTexto, 14);
   doc.setFont('helvetica', 'normal');
-  doc.setFontSize(10);
-  doc.text(`Atlas Financeira 360 · ${new Date().toLocaleString('pt-BR')}`, margem, 19);
+  doc.setFontSize(9);
+  doc.setTextColor(110, 125, 132);
+  doc.text(`Simulador de Viabilidade · ${new Date().toLocaleString('pt-BR')}`, xTexto, 20);
+  doc.setFillColor(...MARINHO);
+  doc.rect(0, 29, larguraPagina * 0.7, 1.5, 'F');
+  doc.setFillColor(...CIANO);
+  doc.rect(larguraPagina * 0.7, 29, larguraPagina * 0.3, 1.5, 'F');
 
-  let y = 34;
+  let y = 40;
   doc.setTextColor(30, 30, 30);
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(12);
@@ -66,7 +91,7 @@ export function exportarPdf(cenarios: Cenario[], feedback: Feedback): void {
     head: [CABECALHO_TABELA],
     body: linhasDaTabela(cenarios),
     margin: { left: margem, right: margem },
-    headStyles: { fillColor: PETROLEO },
+    headStyles: { fillColor: MARINHO },
     styles: { fontSize: 9 },
   });
 

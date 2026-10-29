@@ -14,10 +14,11 @@ import { formatarMoeda } from './formatadores';
 // Registrar só o necessário deixa o bundle menor (tree-shaking do Chart.js).
 Chart.register(LineController, LineElement, PointElement, LinearScale, CategoryScale, Legend, Tooltip);
 
+// Cores do logo: marinho (realista), ciano da seta (otimista) e prata dos nós (pessimista, tracejado).
 const CORES: Record<NomeCenario, string> = {
-  realista: '#0F4C5C',
-  otimista: '#2A9D8F',
-  pessimista: '#C8553D',
+  realista: '#0A3550',
+  otimista: '#00A2D7',
+  pessimista: '#8A989D',
 };
 
 let grafico: Chart<'line'> | null = null;
@@ -30,6 +31,8 @@ export function desenharGrafico(canvas: HTMLCanvasElement, cenarios: Cenario[]):
     borderColor: CORES[c.nome],
     backgroundColor: CORES[c.nome],
     borderWidth: c.nome === 'realista' ? 3 : 2,
+    // Tracejado diferencia o pessimista mesmo para quem não distingue bem as cores.
+    borderDash: c.nome === 'pessimista' ? [6, 4] : [],
     pointRadius: 0,
     pointHoverRadius: 4,
     tension: 0,
@@ -52,16 +55,17 @@ export function desenharGrafico(canvas: HTMLCanvasElement, cenarios: Cenario[]):
       animation: false,
       interaction: { mode: 'index', intersect: false },
       plugins: {
-        legend: { position: 'bottom' },
+        legend: { position: 'bottom', labels: { usePointStyle: true, pointStyle: 'line', color: '#14202B' } },
         tooltip: {
           callbacks: { label: (ctx) => `${ctx.dataset.label}: ${formatarMoeda(ctx.parsed.y ?? 0)}` },
         },
       },
       scales: {
-        x: { ticks: { maxTicksLimit: 9 }, grid: { display: false } },
+        x: { ticks: { maxTicksLimit: 9, color: '#5C6B75' }, grid: { display: false } },
         y: {
-          ticks: { callback: (v) => formatarMoeda(Number(v)) },
-          grid: { color: (ctx) => (ctx.tick.value === 0 ? '#6b7c80' : '#e3e9ea') },
+          ticks: { callback: (v) => formatarMoeda(Number(v)), color: '#5C6B75' },
+          // Linha do zero mais forte: é onde o investimento se paga.
+          grid: { color: (ctx) => (ctx.tick.value === 0 ? '#8A989D' : '#E6ECEF') },
         },
       },
     },
