@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#0B2236" />
-    <title>Simulador de Viabilidade · Atlas Consultoria</title>
+    <title>Atlas Consultoria · Simulador de Viabilidade</title>
     <link rel="icon" type="image/png" href="/logo.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -16,72 +16,160 @@
   <body>
     <header class="cabecalho">
       <div class="cabecalho__conteudo">
-        <img class="cabecalho__logo" src="/logo.png" alt="Logo Atlas Consultoria" />
-        <div class="cabecalho__marca">
-          <span class="cabecalho__nome">Atlas Consultoria</span>
-          <span class="cabecalho__tag">Financial Consulting</span>
-        </div>
+        <a class="cabecalho__home" href="#/inicio" aria-label="Ir para o início">
+          <img class="cabecalho__logo" src="/logo.png" alt="Logo Atlas Consultoria" />
+          <span class="cabecalho__marca">
+            <span class="cabecalho__nome">Atlas Consultoria</span>
+            <span class="cabecalho__tag">Financial Consulting</span>
+          </span>
+        </a>
+        <nav class="nav" aria-label="Navegação principal">
+          <a class="nav__link" href="#/inicio" data-rota="inicio">Início</a>
+          <a class="nav__link" href="#/simulador" data-rota="simulador">Simulador</a>
+          <a class="nav__link" href="#/sensibilidade" data-rota="sensibilidade">Sensibilidade</a>
+          <a class="nav__link" href="#/historico" data-rota="historico">Histórico</a>
+          <a class="nav__link" href="#/metodologia" data-rota="metodologia">Metodologia</a>
+        </nav>
       </div>
     </header>
 
-    <section class="hero">
+    <!-- O texto da faixa muda conforme a tela (ver src/ui/navegacao.ts) -->
+    <section class="hero" id="hero">
       <div class="hero__conteudo">
-        <p class="hero__sobretitulo">Simulador de Viabilidade</p>
-        <h1>Descubra se o seu negócio se paga</h1>
-        <p class="hero__texto">
-          Informe investimento, receita e custos para ver payback, ROI, cenários e o parecer consultivo em segundos.
-        </p>
+        <p class="hero__sobretitulo" id="hero-sobretitulo"></p>
+        <h1 id="hero-titulo"></h1>
+        <p class="hero__texto" id="hero-texto"></p>
+        <div class="hero__acoes" id="hero-acoes">
+          <a class="botao botao--ciano" href="#/simulador">Começar simulação</a>
+          <a class="botao botao--fantasma" href="#/metodologia">Como calculamos</a>
+        </div>
       </div>
     </section>
 
-    <main class="container">
-      <section class="card card--destaque" aria-labelledby="titulo-entradas">
-        <h2 id="titulo-entradas">Dados do negócio</h2>
-        <form id="form-simulacao" novalidate>
-          <div class="campos">
-            <label class="campo">
-              <span>Investimento inicial (R$)</span>
-              <input id="investimento" name="investimento" type="text" inputmode="decimal" placeholder="Ex.: 50.000" />
-              <small class="erro" data-erro-para="investimento"></small>
-            </label>
-            <label class="campo">
-              <span>Receita mensal (R$)</span>
-              <input id="receita" name="receita" type="text" inputmode="decimal" placeholder="Ex.: 12.000" />
-              <small class="erro" data-erro-para="receita"></small>
-            </label>
-            <label class="campo">
-              <span>Custos mensais (R$)</span>
-              <input id="custos" name="custos" type="text" inputmode="decimal" placeholder="Ex.: 7.000" />
-              <small class="erro" data-erro-para="custos"></small>
-            </label>
-          </div>
-          <div class="acoes">
-            <button type="submit" class="botao">Simular</button>
-            <button type="button" id="btn-pdf" class="botao botao--secundario" disabled>Exportar PDF</button>
-          </div>
-        </form>
-      </section>
+    <main class="container" id="conteudo" tabindex="-1">
+      <!-- ============ INÍCIO ============ -->
+      <div class="tela" data-tela="inicio">
+        <div class="recursos">
+          <a class="recurso" href="#/simulador">
+            <span class="recurso__icone" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M4 19h16M6 16V9m6 7V5m6 11v-4" /></svg>
+            </span>
+            <strong>Simulador</strong>
+            <span>Payback, ROI e fluxo de caixa em três cenários lado a lado.</span>
+          </a>
+          <a class="recurso" href="#/sensibilidade">
+            <span class="recurso__icone" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M4 7h10m4 0h2M4 17h4m4 0h8" /><circle cx="16" cy="7" r="2" /><circle cx="10" cy="17" r="2" /></svg>
+            </span>
+            <strong>Sensibilidade</strong>
+            <span>Veja o impacto de mudar receita e custos de -50% a +50%.</span>
+          </a>
+          <a class="recurso" href="#/historico">
+            <span class="recurso__icone" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" /><path d="M12 8v4l3 2" /></svg>
+            </span>
+            <strong>Histórico</strong>
+            <span>Suas últimas 10 simulações salvas neste navegador.</span>
+          </a>
+          <a class="recurso" href="#/metodologia">
+            <span class="recurso__icone" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M6 4h9l3 3v13H6z" /><path d="M9 11h6M9 15h6" /></svg>
+            </span>
+            <strong>Metodologia</strong>
+            <span>Fórmulas, cenários e as regras do parecer consultivo.</span>
+          </a>
+        </div>
 
-      <section id="resultados" class="resultados" hidden>
-        <section class="card" aria-labelledby="titulo-feedback">
-          <h2 id="titulo-feedback">Feedback consultivo</h2>
-          <div id="feedback"></div>
-          <p class="aviso">Este parecer é gerado por um motor de regras simples (limites fixos), não por inteligência artificial.</p>
+        <section class="card" aria-labelledby="titulo-como">
+          <h2 id="titulo-como">Como funciona</h2>
+          <ol class="passos">
+            <li>
+              <span class="passos__num">1</span>
+              <div><strong>Informe os números</strong><p>Investimento inicial, receita mensal e custos mensais.</p></div>
+            </li>
+            <li>
+              <span class="passos__num">2</span>
+              <div><strong>Compare os cenários</strong><p>Realista, otimista e pessimista, com gráfico de 24 meses.</p></div>
+            </li>
+            <li>
+              <span class="passos__num">3</span>
+              <div><strong>Receba o parecer</strong><p>Feedback consultivo e exportação dos resultados em PDF.</p></div>
+            </li>
+          </ol>
+        </section>
+      </div>
+
+      <!-- ============ SIMULADOR ============ -->
+      <div class="tela" data-tela="simulador">
+        <section class="card card--destaque" aria-labelledby="titulo-entradas">
+          <h2 id="titulo-entradas">Dados do negócio</h2>
+          <form id="form-simulacao" novalidate>
+            <div class="campos">
+              <label class="campo">
+                <span>Investimento inicial (R$)</span>
+                <input id="investimento" name="investimento" type="text" inputmode="decimal" placeholder="Ex.: 50.000" />
+                <small class="erro" data-erro-para="investimento"></small>
+              </label>
+              <label class="campo">
+                <span>Receita mensal (R$)</span>
+                <input id="receita" name="receita" type="text" inputmode="decimal" placeholder="Ex.: 12.000" />
+                <small class="erro" data-erro-para="receita"></small>
+              </label>
+              <label class="campo">
+                <span>Custos mensais (R$)</span>
+                <input id="custos" name="custos" type="text" inputmode="decimal" placeholder="Ex.: 7.000" />
+                <small class="erro" data-erro-para="custos"></small>
+              </label>
+            </div>
+            <div class="acoes">
+              <button type="submit" class="botao">Simular</button>
+              <button type="button" id="btn-pdf" class="botao botao--secundario" disabled>Exportar PDF</button>
+            </div>
+          </form>
         </section>
 
-        <section class="card" aria-labelledby="titulo-cenarios">
-          <h2 id="titulo-cenarios">Comparação de cenários</h2>
-          <div class="tabela-wrapper">
-            <table id="tabela-cenarios" class="tabela"></table>
-          </div>
-          <h3 class="subtitulo">Fluxo de caixa acumulado · 24 meses</h3>
-          <div class="grafico-wrapper">
-            <canvas id="grafico-fluxo" aria-label="Fluxo de caixa acumulado por cenário" role="img"></canvas>
-          </div>
+        <section id="resultados" class="resultados" hidden>
+          <section class="card" aria-labelledby="titulo-feedback">
+            <h2 id="titulo-feedback">Feedback consultivo</h2>
+            <div id="feedback"></div>
+            <p class="aviso">Este parecer é gerado por um motor de regras simples (limites fixos), não por inteligência artificial.</p>
+          </section>
+
+          <section class="card" aria-labelledby="titulo-cenarios">
+            <h2 id="titulo-cenarios">Comparação de cenários</h2>
+            <div class="tabela-wrapper">
+              <table id="tabela-cenarios" class="tabela"></table>
+            </div>
+            <h3 class="subtitulo">Fluxo de caixa acumulado · 24 meses</h3>
+            <div class="grafico-wrapper">
+              <canvas id="grafico-fluxo" aria-label="Fluxo de caixa acumulado por cenário" role="img"></canvas>
+            </div>
+          </section>
+
+          <a class="cta-proximo" href="#/sensibilidade">
+            <span>
+              <strong>E se os números mudarem?</strong>
+              <span>Teste variações de receita e custos na análise de sensibilidade.</span>
+            </span>
+            <span class="cta-proximo__seta" aria-hidden="true">→</span>
+          </a>
+        </section>
+      </div>
+
+      <!-- ============ SENSIBILIDADE ============ -->
+      <div class="tela" data-tela="sensibilidade">
+        <section class="card vazio" id="sensibilidade-vazio">
+          <span class="vazio__icone" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M4 7h10m4 0h2M4 17h4m4 0h8" /><circle cx="16" cy="7" r="2" /><circle cx="10" cy="17" r="2" /></svg>
+          </span>
+          <strong>Nenhuma simulação ativa</strong>
+          <p>Faça uma simulação primeiro; a análise de sensibilidade usa os valores dela como base.</p>
+          <a class="botao" href="#/simulador">Ir para o simulador</a>
         </section>
 
-        <section class="card" aria-labelledby="titulo-sensibilidade">
+        <section class="card" id="sensibilidade-conteudo" aria-labelledby="titulo-sensibilidade" hidden>
           <h2 id="titulo-sensibilidade">Análise de sensibilidade</h2>
+          <p class="base-info" id="sensibilidade-base"></p>
           <div class="sliders">
             <label class="slider">
               <span>Variação da receita <strong id="valor-var-receita">0%</strong></span>
@@ -94,15 +182,23 @@
           </div>
           <div id="sensibilidade-resultado"></div>
         </section>
-      </section>
+      </div>
 
-      <section class="card" aria-labelledby="titulo-historico">
-        <div class="card__topo">
-          <h2 id="titulo-historico">Histórico (últimas 10)</h2>
-          <button type="button" id="btn-limpar" class="botao botao--perigo">Limpar</button>
-        </div>
-        <ul id="lista-historico" class="historico"></ul>
-      </section>
+      <!-- ============ HISTÓRICO ============ -->
+      <div class="tela" data-tela="historico">
+        <section class="card" aria-labelledby="titulo-historico">
+          <div class="card__topo">
+            <h2 id="titulo-historico">Últimas 10 simulações</h2>
+            <button type="button" id="btn-limpar" class="botao botao--perigo">Limpar</button>
+          </div>
+          <ul id="lista-historico" class="historico"></ul>
+        </section>
+      </div>
+
+      <!-- ============ METODOLOGIA ============ -->
+      <div class="tela" data-tela="metodologia">
+        <div id="metodologia"></div>
+      </div>
     </main>
 
     <footer class="rodape">

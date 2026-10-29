@@ -5,9 +5,12 @@ import type { Cenario, Entradas, Feedback } from './core/tipos';
 import { lerHistorico, limparHistorico, salvarNoHistorico } from './storage/historico';
 import { pegar } from './ui/dom';
 import { desenharFeedback } from './ui/feedback';
+import { formatarMoeda } from './ui/formatadores';
 import { ligarLimpezaDeErros, lerFormulario, preencherFormulario } from './ui/formulario';
 import { desenharGrafico } from './ui/grafico';
 import { desenharHistorico } from './ui/historico';
+import { desenharMetodologia } from './ui/metodologia';
+import { iniciarNavegacao, irPara } from './ui/navegacao';
 import { atualizarSensibilidade, ligarSensibilidade } from './ui/sensibilidade';
 import { desenharTabela } from './ui/tabelaCenarios';
 import './estilos/main.css';
@@ -21,13 +24,19 @@ function simular(entradas: Entradas, salvar: boolean): void {
   const feedback = gerarFeedback(realista.resultado);
   atual = { cenarios, feedback };
 
-  const secao = pegar('resultados');
-  secao.hidden = false;
+  pegar('resultados').hidden = false;
   desenharFeedback(pegar('feedback'), feedback);
   desenharTabela(pegar<HTMLTableElement>('tabela-cenarios'), cenarios);
   desenharGrafico(pegar<HTMLCanvasElement>('grafico-fluxo'), cenarios);
-  atualizarSensibilidade(entradas);
   pegar<HTMLButtonElement>('btn-pdf').disabled = false;
+
+  // A tela de sensibilidade sai do estado vazio assim que existe uma simulação.
+  pegar('sensibilidade-vazio').hidden = true;
+  pegar('sensibilidade-conteudo').hidden = false;
+  pegar('sensibilidade-base').textContent =
+    `Base (cenário realista): investimento ${formatarMoeda(entradas.investimento)}, ` +
+    `receita ${formatarMoeda(entradas.receita)} e custos ${formatarMoeda(entradas.custos)} por mês.`;
+  atualizarSensibilidade(entradas);
 
   if (salvar && !salvarNoHistorico(entradas, realista.resultado)) {
     alert('Não foi possível salvar no histórico (armazenamento do navegador indisponível).');
@@ -39,14 +48,16 @@ function atualizarHistorico(): void {
   desenharHistorico(pegar<HTMLUListElement>('lista-historico'), lerHistorico(), (entradas) => {
     preencherFormulario(entradas);
     simular(entradas, false);
-    pegar('resultados').scrollIntoView({ behavior: 'smooth' });
+    irPara('simulador');
   });
 }
 
 pegar<HTMLFormElement>('form-simulacao').addEventListener('submit', (evento) => {
   evento.preventDefault();
   const entradas = lerFormulario();
-  if (entradas) simular(entradas, true);
+  if (!entradas) return;
+  simular(entradas, true);
+  pegar('resultados').scrollIntoView({ behavior: 'smooth', block: 'start' });
 });
 
 pegar('btn-pdf').addEventListener('click', async () => {
@@ -69,4 +80,6 @@ pegar('btn-limpar').addEventListener('click', () => {
 
 ligarLimpezaDeErros();
 ligarSensibilidade();
+desenharMetodologia(pegar('metodologia'));
 atualizarHistorico();
+iniciarNavegacao();
